@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login / Register</title>
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <h1 id="formTitle">Welcome Back</h1>
+            
+            <form id="loginForm">
+                <div class="input-group">
+                    <img src="https://cdn.jsdelivr.net/npm/lucide-static@0.344.0/icons/mail.svg" alt="Email icon" class="icon">
+                    <input type="email" placeholder="Email Address" required>
+                </div>
+                
+                <div class="input-group">
+                    <img src="https://cdn.jsdelivr.net/npm/lucide-static@0.344.0/icons/lock.svg" alt="Password icon" class="icon">
+                    <input type="password" placeholder="Password" required>
+                </div>
+
+                <button type="submit" class="submit-btn">
+                    Sign In
+                    <img src="https://cdn.jsdelivr.net/npm/lucide-static@0.344.0/icons/arrow-right.svg" alt="Arrow right" class="icon">
+                </button>
+            </form>
+
+            <form id="registerForm" class="hidden">
+                <div class="input-group">
+                    <img src="https://cdn.jsdelivr.net/npm/lucide-static@0.344.0/icons/user.svg" alt="User icon" class="icon">
+                    <input type="text" placeholder="Full Name" required>
+                </div>
+
+                <div class="input-group">
+                    <img src="https://cdn.jsdelivr.net/npm/lucide-static@0.344.0/icons/mail.svg" alt="Email icon" class="icon">
+                    <input type="email" placeholder="Email Address" required>
+                </div>
+                
+                <div class="input-group">
+                    <img src="https://cdn.jsdelivr.net/npm/lucide-static@0.344.0/icons/lock.svg" alt="Password icon" class="icon">
+                    <input type="password" placeholder="Password" required>
+                </div>
+
+                <button type="submit" class="submit-btn">
+                    Create Account
+                    <img src="https://cdn.jsdelivr.net/npm/lucide-static@0.344.0/icons/arrow-right.svg" alt="Arrow right" class="icon">
+                </button>
+            </form>
+            
+            <div class="toggle-form">
+                <button onclick="toggleForm()" class="toggle-btn">
+                    Don't have an account? Sign Up
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleForm() {
+            const loginForm = document.getElementById('loginForm');
+            const registerForm = document.getElementById('registerForm');
+            const formTitle = document.getElementById('formTitle');
+            const toggleBtn = document.querySelector('.toggle-btn');
+
+            if (loginForm.classList.contains('hidden')) {
+                loginForm.classList.remove('hidden');
+                registerForm.classList.add('hidden');
+                formTitle.textContent = 'Welcome Back';
+                toggleBtn.textContent = "Don't have an account? Sign Up";
+            } else {
+                loginForm.classList.add('hidden');
+                registerForm.classList.remove('hidden');
+                formTitle.textContent = 'Create Account';
+                toggleBtn.textContent = 'Already have an account? Sign In';
+            }
+        }
+    </script>
+</body>
+</html>
