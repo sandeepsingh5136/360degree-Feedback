@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>360 Feedback System</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f0f2f5;
+    }
+    header, nav, main, section {
+      padding: 20px;
+    }
+    header {
+      background-color: #3f51b5;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+    }
+    .profile {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background-color: white;
+      color: #3f51b5;
+      padding: 5px 15px;
+      border-radius: 20px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    .profile img {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+    }
+    nav {
+      background-color: #fff;
+      display: flex;
+      justify-content: space-around;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    nav a {
+      text-decoration: none;
+      color: #3f51b5;
+      padding: 10px;
+    }
+    nav a:hover {
+      background-color: #e0e0e0;
+    }
+    section {
+      background: white;
+      margin: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    .form-group {
+      margin: 15px 0;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background-color: #3f51b5;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #303f9f;
+    }
+    canvas {
+      max-width: 600px;
+      margin: 20px auto;
+      display: block;
+    }
+    .progress-ring {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      padding: 20px 0;
+    }
+    .progress-circle {
+      text-align: center;
+    }
+    .progress-circle svg {
+      transform: rotate(-90deg);
+    }
+    .progress-circle circle {
+      fill: none;
+      stroke-width: 10;
+    }
+    .progress-circle text {
+      font-size: 1rem;
+      fill: #333;
+    }
+    .star-rating .star {
+      font-size: 24px;
+      cursor: pointer;
+      color: #ccc;
+    }
+    .star-rating .star.selected {
+      color: #ffc107;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>360-Degree Feedback System</h1>
+    <div class="profile">
+      <!-- <img src="https://via.placeholder.com/30" alt="Profile" />
+      <span>John Doe</span> -->
+      👤 Profile
+    </div>
+  </header>
+  <nav>
+    <a href="#dashboard">Dashboard</a>
+    <a href="#give">Give Feedback</a>
+    <a href="#review">Review</a>
+  </nav>
+  <main>
+    <section id="dashboard">
+      <h2>Feedback Dashboard</h2>
+      <p>Summary of received/given feedback.</p>
+      <div class="progress-ring">
+        <div class="progress-circle">
+          <svg width="100" height="100">
+            <circle cx="50" cy="50" r="40" stroke="#ccc"></circle>
+            <circle cx="50" cy="50" r="40" stroke="#3f51b5" stroke-dasharray="251.2" stroke-dashoffset="75.4"></circle>
+            <text x="50" y="55" text-anchor="middle">70%</text>
+          </svg>
+          <p>Feedback Received</p>
+        </div>
+        <div class="progress-circle">
+          <svg width="100" height="100">
+            <circle cx="50" cy="50" r="40" stroke="#ccc"></circle>
+            <circle cx="50" cy="50" r="40" stroke="#ffc107" stroke-dasharray="251.2" stroke-dashoffset="100.4"></circle>
+            <text x="50" y="55" text-anchor="middle">60%</text>
+          </svg>
+          <p>Feedback Given</p>
+        </div>
+      </div>
+      <canvas id="feedbackChart"></canvas>
+      <script>
+        const ctx = document.getElementById('feedbackChart').getContext('2d');
+        const feedbackChart = new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: ['Self', 'Manager', 'Peer', 'Subordinate', 'Client'],
+            datasets: [
+              {
+                label: 'Feedback Received',
+                data: [4, 6, 8, 3, 2],
+                backgroundColor: 'rgba(63, 81, 181, 0.7)'
+              },
+              {
+                label: 'Feedback Given',
+                data: [5, 3, 7, 2, 1],
+                backgroundColor: 'rgba(255, 193, 7, 0.7)'
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            }
+          }
+        });
+      </script>
+    </section>
+    <section id="give">
+      <h2>Give Feedback</h2>
+      <form onsubmit="submitFeedback(event)">
+        <div class="form-group">
+          <label for="user">Select User</label>
+          <input type="text" id="user" placeholder="Enter name" />
+        </div>
+        <div class="form-group">
+          <label for="relationship">Relationship</label>
+          <select id="relationship">
+            <option>Peer</option>
+            <option>Manager</option>
+            <option>Subordinate</option>
+            <option>Self</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Rating</label>
+          <div class="star-rating">
+            <span class="star">★</span>
+            <span class="star">★</span>
+            <span class="star">★</span>
+            <span class="star">★</span>
+            <span class="star">★</span>
+          </div>
+          <input type="hidden" id="ratingValue" name="rating" />
+        </div>
+        <div class="form-group">
+          <label for="comments">Comments</label>
+          <textarea id="comments" rows="4"></textarea>
+        </div>
+        <button type="submit">Submit Feedback</button>
+      </form>
+    </section>
+    <section id="review">
+      <h2>Feedback Review</h2>
+      <div>
+        <h3>Peer Feedback</h3>
+        <p>“Great collaborator.” ⭐⭐⭐⭐</p>
+        <h3>Manager Feedback</h3>
+        <p>“Excellent leadership.” ⭐⭐⭐⭐⭐</p>
+        <h3>Self Feedback</h3>
+        <p>“Need to improve on time management.” ⭐⭐⭐</p>
+      </div>
+    </section>
+  </main>
+  <script>
+  const stars = document.querySelectorAll(".star-rating .star");
+  const ratingValueInput = document.getElementById("ratingValue");
+  let selectedRating = 0;
+
+  stars.forEach((star, index) => {
+    star.addEventListener("click", () => {
+      selectedRating = index + 1;
+      ratingValueInput.value = selectedRating;
+      updateStars();
+    });
+
+    star.addEventListener("mouseover", () => {
+      highlightStars(index + 1);
+    });
+
+    star.addEventListener("mouseout", () => {
+      highlightStars(selectedRating);
+    });
+  });
+
+  function updateStars() {
+    stars.forEach((star, i) => {
+      star.classList.toggle("selected", i < selectedRating);
+    });
+  }
+
+  function highlightStars(rating) {
+    stars.forEach((star, i) => {
+      star.classList.toggle("selected", i < rating);
+    });
+  }
+
+  function submitFeedback(event) {
+    event.preventDefault();
+    const feedback = {
+      user: document.getElementById("user").value,
+      relationship: document.getElementById("relationship").value,
+      rating: parseInt(ratingValueInput.value),
+      comments: document.getElementById("comments").value,
+    };
+
+    fetch("http://localhost:5000/api/feedback", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(feedback),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        alert(data.message || "Feedback submitted!");
+      })
+      .catch((err) => {
+        console.error("Error:", err);
+        alert("Something went wrong. Please check the console.");
+      });
+  }
+
+
+
+  </script>
+</body>
+</html>
