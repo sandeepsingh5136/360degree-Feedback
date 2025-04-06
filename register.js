@@ -8,7 +8,8 @@ const firebaseConfig = {
     apiKey: "AIzaSyA_brKX_0Vsr2TfKt0XAmcqd5U9-4qBMe4",
     authDomain: "hackfest25-d7e82.firebaseapp.com",
     projectId: "hackfest25-d7e82",
-    storageBucket: "hackfest25-d7e82.firebasestorage.app",
+    storageBucket: "hackfest25-d7e82.appspot.com", 
+
     messagingSenderId: "502418277011",
     appId: "1:502418277011:web:9e37099a42b3ad50250366"
 };
@@ -31,7 +32,7 @@ submit.addEventListener("click", function (event) {
             // Signed up 
             const user = userCredential.user;
             alert("Creating Account....")
-            window.location.herf = "dashboard.html";
+            window.location.href = "dashboard.html";
             // ...
         })
         .catch((error) => {
